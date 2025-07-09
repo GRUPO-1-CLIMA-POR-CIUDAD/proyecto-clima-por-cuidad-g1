@@ -2,11 +2,12 @@
 
 ## 👥 Integrantes del Grupo 1
 
-- Tracy   (Scrum Master)
-- César   (Product Owner)
-- Jhonson (Developer)
-- Jesus   (Developer)
-- Jordan  (Developer)
+|---------|---------------|
+| Tracy   | Scrum Master  |
+| César   | Product Owner |
+| Jhonson | Developer     |
+| Jesus   | Developer     |
+| Jordan  | Developer     |
 
 ---
 
