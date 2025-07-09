@@ -1,8 +1,9 @@
 # 🌦️ Mini Proyecto: Clima por Ciudad - Grupo 1
 
-## 👥 Integrantes del Grupo 1
+## 👥 Integrantes
 
-|---------|---------------|
+|         GRUPO 1         |
+|-------------------------|
 | Tracy   | Scrum Master  |
 | César   | Product Owner |
 | Jhonson | Developer     |
