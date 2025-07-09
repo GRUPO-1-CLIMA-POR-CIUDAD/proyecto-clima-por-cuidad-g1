@@ -1,5 +1,15 @@
 # 🌦️ Mini Proyecto: Clima por Ciudad - Grupo 1
 
+## 👥 Integrantes del Grupo 1
+
+- Tracy   (Scrum Master)
+- César   (Product Owner)
+- Jhonson (Developer)
+- Jesus   (Developer)
+- Jordan  (Developer)
+
+---
+
 ## 🎯 Objetivo General
 
 Aplicar los principios de **Scrum**, **control de versiones con Git** y **desarrollo web colaborativo** para entregar una aplicación funcional que consuma una API pública de clima, trabajando en equipo de forma organizada y ágil.
