@@ -43,9 +43,12 @@ La aplicación permite al usuario escribir el nombre de una **ciudad** y visuali
 ## ✅ Cumplimiento de Entregables
 
 | Entregable	                        | Estado  |
+|---------------------------------------|---------|
 |  App funcional local	                |   ✅   |
 |  App desplegada en Render	            |   ✅   |
 |  Repositorio GitHub con ramas y PRs	|   ✅   |
 |  Trello con Backlog y tareas Scrum	|   ✅   | 
 |  Video grupal	                        |        |
 |  Lenguaje registrado antes de inicio	|   ✅   |
+
+---
