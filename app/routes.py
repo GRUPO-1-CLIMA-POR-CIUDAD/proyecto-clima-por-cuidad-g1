@@ -1,24 +1,29 @@
-from flask import Flask, request, render_template
+from flask import Blueprint, render_template, request
 import requests
 
-app = Flask(__name__)
+main = Blueprint('main', __name__)
 
-# 🔍 Obtener coordenadas y datos extendidos desde Nominatim
+# Diccionario para interpretar el código del clima
+CLIMA_ESTADOS = {
+    0: ("Despejado", "☀️"),
+    1: ("Mayormente despejado", "🌤️"),
+    2: ("Parcialmente nublado", "⛅"),
+    3: ("Nublado", "☁️"),
+    45: ("Niebla", "🌫️"),
+    48: ("Niebla helada", "🌫️❄️"),
+    51: ("Llovizna ligera", "🌦️"),
+    61: ("Lluvia ligera", "🌧️"),
+    80: ("Chubascos", "🌦️"),
+    95: ("Tormenta", "⛈️"),
+    99: ("Tormenta con granizo", "🌩️")
+}
+
 def obtener_coordenadas(ciudad):
     url = f"https://nominatim.openstreetmap.org/search?format=json&q={ciudad}&addressdetails=1"
-    headers = {"User-Agent": "Mozilla/5.0"}  # Obligatorio para Nominatim
+    headers = {"User-Agent": "Mozilla/5.0"}
     res = requests.get(url, headers=headers)
     if res.status_code != 200:
         return None
-
-# 🔍 Obtener coordenadas desde Nominatim (OpenStreetMap)
-def obtener_coordenadas(ciudad):
-    url = f"https://nominatim.openstreetmap.org/search?format=json&q={ciudad}"
-    headers = {"User-Agent": "Mozilla/5.0"}  # Requerido por Nominatim
-    res = requests.get(url, headers=headers)
-    if res.status_code != 200:
-        return None, None
-
     data = res.json()
     if not data:
         return None
@@ -33,8 +38,6 @@ def obtener_coordenadas(ciudad):
         "zona": lugar.get("display_name", "")
     }
 
-# 🌦️ Obtener clima actual desde Open-Meteo
-# 🌦️ Obtener clima desde Open-Meteo
 def obtener_clima(lat, lon):
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
     res = requests.get(url)
@@ -42,9 +45,7 @@ def obtener_clima(lat, lon):
         return None
     return res.json()
 
-# 🚀 Página principal
-
-@app.route("/", methods=["GET", "POST"])
+@main.route("/", methods=["GET", "POST"])
 def index():
     resultado = None
     error = None
@@ -56,11 +57,13 @@ def index():
         if not info:
             error = f"No se encontró la ciudad: {ciudad_input}"
         else:
-
             data = obtener_clima(info["lat"], info["lon"])
             if not data or "current_weather" not in data:
                 error = f"No se pudo obtener el clima de {ciudad_input}"
             else:
+                codigo = data["current_weather"]["weathercode"]
+                estado, icono = CLIMA_ESTADOS.get(codigo, ("Desconocido", "❓"))
+
                 resultado = {
                     "ciudad": info["ciudad"],
                     "distrito": info["distrito"],
@@ -68,22 +71,12 @@ def index():
                     "zona": info["zona"],
                     "lat": info["lat"],
                     "lon": info["lon"],
-
-            data = obtener_clima(lat, lon)
-            if not data or "current_weather" not in data:
-                error = f"No se pudo obtener el clima de {ciudad}"
-            else:
-                clima = {
-                    "ciudad": ciudad.title(),
                     "temperatura": data["current_weather"]["temperature"],
                     "viento": data["current_weather"]["windspeed"],
                     "hora": data["current_weather"]["time"],
-                    "codigo": data["current_weather"]["weathercode"]
+                    "codigo": codigo,
+                    "estado": estado,
+                    "icono": icono
                 }
 
-
     return render_template("index.html", resultado=resultado, error=error)
-    return render_template("index.html", clima=clima, error=error)
-
-if __name__ == '__main__':
-    app.run(debug=True)
