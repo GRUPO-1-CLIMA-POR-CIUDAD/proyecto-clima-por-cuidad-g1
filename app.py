@@ -3,19 +3,27 @@ import requests
 
 app = Flask(__name__)
 
+# 🔍 Obtener coordenadas desde Nominatim (OpenStreetMap)
 def obtener_coordenadas(ciudad):
     url = f"https://nominatim.openstreetmap.org/search?format=json&q={ciudad}"
-    res = requests.get(url)
+    headers = {"User-Agent": "Mozilla/5.0"}  # Requerido por Nominatim
+    res = requests.get(url, headers=headers)
+    if res.status_code != 200:
+        return None, None
     data = res.json()
     if not data:
         return None, None
     return float(data[0]['lat']), float(data[0]['lon'])
 
+# 🌦️ Obtener clima desde Open-Meteo
 def obtener_clima(lat, lon):
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
     res = requests.get(url)
+    if res.status_code != 200:
+        return None
     return res.json()
 
+# 📄 Página principal
 @app.route("/", methods=["GET", "POST"])
 def index():
     clima = None
@@ -28,13 +36,16 @@ def index():
             error = f"No se encontró la ciudad: {ciudad}"
         else:
             data = obtener_clima(lat, lon)
-            clima = {
-                "ciudad": ciudad.title(),
-                "temperatura": data["current_weather"]["temperature"],
-                "viento": data["current_weather"]["windspeed"],
-                "hora": data["current_weather"]["time"],
-                "codigo": data["current_weather"]["weathercode"]
-            }
+            if not data or "current_weather" not in data:
+                error = f"No se pudo obtener el clima de {ciudad}"
+            else:
+                clima = {
+                    "ciudad": ciudad.title(),
+                    "temperatura": data["current_weather"]["temperature"],
+                    "viento": data["current_weather"]["windspeed"],
+                    "hora": data["current_weather"]["time"],
+                    "codigo": data["current_weather"]["weathercode"]
+                }
 
     return render_template("index.html", clima=clima, error=error)
 
