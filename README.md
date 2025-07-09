@@ -2,13 +2,13 @@
 
 ## 👥 Integrantes
 
-| GRUPO 1 | Roles         |
-|---------|---------------|
-| Tracy   | Scrum Master  |
-| César   | Product Owner |
-| Jhonson | Developer     |
-| Jesus   | Developer     |
-| Jordan  | Developer     |
+| GRUPO 1 | Roles                      |
+|---------|----------------------------|
+| Tracy   | Scrum Master  / Developer  |
+| César   | Product Owner / Developer  |
+| Jhonson | Developer                  |
+| Jesus   | Developer                  |
+| Jordan  | Developer                  |
 
 ---
 
