@@ -2,7 +2,7 @@
 
 ## 👥 Integrantes
 
-|         GRUPO 1         |
+| GRUPO 1 | Roles         |
 |-------------------------|
 | Tracy   | Scrum Master  |
 | César   | Product Owner |
