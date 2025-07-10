@@ -61,7 +61,7 @@ La aplicación permite al usuario escribir el nombre de una **ciudad** y visuali
 |  App desplegada en Render	            |   ✅   |
 |  Repositorio GitHub con ramas y PRs	|   ✅   |
 |  Trello con Backlog y tareas Scrum	|   ✅   | 
-|  Video grupal	                        |        |
+|  Video grupal	                        |   ✅   |
 |  Lenguaje registrado antes de inicio	|   ✅   |
 
 ---
